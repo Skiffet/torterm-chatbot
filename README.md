@@ -1,6 +1,12 @@
-**Torterm** helps homeowners and designers explore **house exterior styles** in natural language, preview **concept visuals**, and get **material recommendations grounded in Thai-market product data**—not generic web answers.
+# Torterm
 
-Built with **large language models**, **retrieval-augmented generation (RAG)**, and **generative AI** for images and text.
+**Torterm** is a conversational assistant for **residential exterior design** in Thailand.  
+Users describe styles and preferences in natural language, preview **concept visuals**, and receive **material suggestions grounded in Thai product data**—not generic, non-local web answers.
 
+The stack combines **large language models (LLMs)**, **retrieval-augmented generation (RAG)** over construction-material catalogs, and **generative AI** for both text and image outputs.
 
-Course project: an LLM-powered chatbot for Thailand-specific exterior design assistance, combining RAG over construction-material catalogs with generative image models.
+**Context:** Developed as a **university course project** focused on **Thailand-specific** exterior design support: pairing grounded retrieval with generative models for practical, market-relevant recommendations.
+
+---
+
+MIT License
