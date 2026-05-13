@@ -1,6 +1,8 @@
 """
-Standalone CLI for testing the Torterm RAG chatbot.
-Run from the backend/ directory:
+CLI for testing the Torterm chatbot locally.
+
+Usage:
+    cd backend
     python torterm_bot.py
 """
 import os
@@ -16,43 +18,23 @@ from google import genai
 
 api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
-    print("ERROR: GEMINI_API_KEY not found in .env")
-    sys.exit(1)
+    sys.exit("ERROR: GEMINI_API_KEY not found in .env")
 
 _client = genai.Client(api_key=api_key)
 
+from chatbot.prompts import build_chat_prompt
 from chatbot.rag import retrieve_products, format_products_for_prompt
 
-SYSTEM_PROMPT = """คุณคือ "ต้อเติม" (Torterm) ผู้เชี่ยวชาญด้านการออกแบบและปรับปรุงบ้านภายนอก
-คุณช่วยแนะนำวัสดุก่อสร้างและของตกแต่งจาก HomePro
 
-กฎสำคัญ:
-- แนะนำเฉพาะสินค้าที่อยู่ในรายการ "สินค้าที่เกี่ยวข้อง" ด้านล่างเท่านั้น
-- ถ้าไม่มีสินค้าที่ตรงกับความต้องการ ให้บอกผู้ใช้ตรงๆ ว่ายังไม่มีสินค้านั้นในระบบ
-- บอกราคาเป็นบาทเสมอ
-- ตอบเป็นภาษาไทย เป็นมิตร และกระชับ"""
-
-
-def chat(user_message: str) -> str:
-    relevant_products = retrieve_products(user_message, n_results=5)
-    products_block = format_products_for_prompt(relevant_products)
-
-    prompt = f"""{SYSTEM_PROMPT}
-
-สินค้าที่เกี่ยวข้อง (จากฐานข้อมูล HomePro):
-{products_block}
-
-คำถาม/ความต้องการของลูกค้า: "{user_message}"
-
-กรุณาแนะนำสินค้าที่เหมาะสมจากรายการด้านบน พร้อมอธิบายว่าเหมาะสมอย่างไร"""
-
-    response = _client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
-    return response.text
+def chat(message: str) -> str:
+    products = retrieve_products(message, n_results=5)
+    prompt = build_chat_prompt(message, format_products_for_prompt(products))
+    return _client.models.generate_content(model="gemini-2.5-flash", contents=prompt).text
 
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("ยินดีต้อนรับสู่ ต้อเติม (Torterm) - ที่ปรึกษาปรับปรุงบ้าน")
+    print("ต้อเติม (Torterm) — ที่ปรึกษาปรับปรุงบ้าน")
     print("พิมพ์ 'exit' เพื่อออก")
     print("=" * 60 + "\n")
 
@@ -62,11 +44,9 @@ if __name__ == "__main__":
             continue
         if user_input.lower() == "exit":
             break
-
-        print("\n[ต้อเติมกำลังคิด...]\n" + "-" * 40)
+        print("\n[กำลังคิด...]\n" + "-" * 40)
         try:
-            reply = chat(user_input)
-            print(f"ต้อเติม:\n{reply}")
+            print(f"ต้อเติม:\n{chat(user_input)}")
         except RuntimeError as e:
             print(f"Error: {e}")
         print("=" * 60 + "\n")
