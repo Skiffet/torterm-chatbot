@@ -1,0 +1,23 @@
+artifact_path: /Users/max/torterm-chatbot/notebooks/mlruns/1/models/m-3d0151bf86464fbd970673e77308b03f/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.13
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.12.0
+model_id: m-3d0151bf86464fbd970673e77308b03f
+model_size_bytes: 792460
+model_uuid: m-3d0151bf86464fbd970673e77308b03f
+prompts: null
+run_id: 8d61435ffe0341d4888cd22e502a907e
+utc_time_created: '2026-05-13 11:47:04.478740'
