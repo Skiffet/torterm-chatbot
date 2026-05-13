@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 import base64
-import requests as http_requests
+import traceback
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -15,41 +15,51 @@ from .rag import retrieve_products, format_products_for_prompt
 load_dotenv()
 
 _client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-_HF_TOKEN = os.getenv("HF_TOKEN", "")
-_HF_URL = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell"
 _GEMINI_MODEL = "gemini-2.5-flash"
+_GEMINI_IMAGE_MODEL = "gemini-2.5-flash-image"
 
 
-def _build_image_prompt(message: str, products: list[dict]) -> str:
-    materials = ", ".join(
-        f"{p['name'].split()[0]} {p.get('brand', '')}".strip()
-        for p in products[:3]
-    )
-    return (
-        f"photorealistic exterior house renovation, modern Thai house, "
-        f"{message}, white walls, clean modern style, "
-        f"materials: {materials}, "
-        f"architectural photography, bright daylight, high quality, 4k"
-    )
-
-
-def _generate_image(prompt: str) -> tuple[str | None, str | None]:
-    """Call HuggingFace FLUX to generate a renovation concept image.
+def _renovate_image(
+    image_bytes: bytes,
+    mime_type: str,
+    message: str,
+    products: list[dict],
+) -> tuple[str | None, str | None]:
+    """Edit the uploaded house photo using Gemini img2img.
+    Keeps the same house structure/angle and applies the renovation style.
     Returns (base64_string, mime_type) or (None, None) on failure."""
-    if not _HF_TOKEN:
-        return None, None
+    materials = ", ".join(
+        f"{p['name']} by {p.get('brand', '')}" for p in products[:4]
+    )
+    prompt = (
+        f"Renovate this exact house: {message}. "
+        f"Keep the same house structure, roof shape, camera angle, perspective, "
+        f"trees, and surroundings — only change the exterior finish and materials. "
+        f"Apply these materials: {materials}. "
+        f"Photorealistic, high-quality architectural visualization."
+    )
     try:
-        resp = http_requests.post(
-            _HF_URL,
-            headers={"Authorization": f"Bearer {_HF_TOKEN}"},
-            json={"inputs": prompt},
-            timeout=60,
+        response = _client.models.generate_content(
+            model=_GEMINI_IMAGE_MODEL,
+            contents=[
+                types.Content(
+                    role="user",
+                    parts=[
+                        types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
+                        types.Part.from_text(text=prompt),
+                    ],
+                )
+            ],
+            config=types.GenerateContentConfig(
+                response_modalities=["TEXT", "IMAGE"]
+            ),
         )
-        content_type = resp.headers.get("content-type", "")
-        if resp.status_code == 200 and content_type.startswith("image/"):
-            return base64.b64encode(resp.content).decode("utf-8"), content_type.split(";")[0]
+        for part in response.candidates[0].content.parts:
+            if part.inline_data is not None:
+                b64 = base64.b64encode(part.inline_data.data).decode("utf-8")
+                return b64, part.inline_data.mime_type
     except Exception:
-        pass
+        print(f"[Torterm] Image renovation failed:\n{traceback.format_exc()}")
     return None, None
 
 
@@ -74,21 +84,9 @@ def chat_endpoint(request):
 def analyze_house(request):
     """
     Main Torterm endpoint.
-    Accepts a house photo + renovation description, then:
-      1. Finds matching HomePro products via RAG
-      2. Uses Gemini Vision to recommend which material goes where
-      3. Generates a renovation concept image via HuggingFace FLUX
-
-    Request: multipart/form-data
-        image   — house photo (jpg / png / webp)
-        message — e.g. "อยากได้สไตล์โมเดิร์น สีขาว ดูสะอาด"
-
-    Response:
-        analysis        — Thai text breakdown by area + cost estimate
-        products        — matched HomePro products
-        renovated_image — base64 concept image (null if HF_TOKEN not set)
-        renovated_mime  — image MIME type
-        image_prompt    — English prompt sent to FLUX (useful for debugging)
+    1. RAG — find matching products from the catalog
+    2. Gemini Vision — analyze photo, recommend which material goes where + cost estimate
+    3. Gemini img2img — edit the uploaded house photo to show the renovation result
     """
     image_file = request.FILES.get("image")
     message = request.data.get("message", "").strip()
@@ -111,8 +109,10 @@ def analyze_house(request):
     except RuntimeError as e:
         return Response({"error": str(e)}, status=503)
 
-    # Gemini Vision — analyze photo and recommend materials per area
-    vision_prompt = build_vision_prompt(message, format_products_for_prompt(products))
+    products_block = format_products_for_prompt(products)
+
+    # Step 2: Gemini Vision — recommend which material goes on which part + cost
+    vision_prompt = build_vision_prompt(message, products_block)
     analysis = _client.models.generate_content(
         model=_GEMINI_MODEL,
         contents=[
@@ -121,14 +121,12 @@ def analyze_house(request):
         ],
     ).text
 
-    # HuggingFace FLUX — generate renovation concept image
-    image_prompt = _build_image_prompt(message, products)
-    renovated_image, renovated_mime = _generate_image(image_prompt)
+    # Step 3: Gemini img2img — renovate the actual uploaded house photo
+    renovated_image, renovated_mime = _renovate_image(image_bytes, mime_type, message, products)
 
     return Response({
         "analysis": analysis,
         "products": products,
         "renovated_image": renovated_image,
         "renovated_mime": renovated_mime,
-        "image_prompt": image_prompt,
     })
