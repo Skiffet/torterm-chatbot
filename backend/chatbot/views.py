@@ -15,10 +15,10 @@ load_dotenv()
 _client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 _HF_TOKEN = os.getenv("HF_TOKEN", "")
 
-# HuggingFace model for house renovation visualization
+# HuggingFace FLUX.1-schnell for renovation concept visualization
 _HF_MODEL_URL = (
-    "https://api-inference.huggingface.co/models/"
-    "stabilityai/stable-diffusion-xl-base-1.0"
+    "https://router.huggingface.co/hf-inference/models/"
+    "black-forest-labs/FLUX.1-schnell"
 )
 
 # ─── Prompts ─────────────────────────────────────────────────────────────────
