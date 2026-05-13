@@ -34,19 +34,19 @@ def chat(message: str) -> str:
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("ต้อเติม (Torterm) — ที่ปรึกษาปรับปรุงบ้าน")
-    print("พิมพ์ 'exit' เพื่อออก")
+    print("Torterm — Home Renovation AI Assistant")
+    print("Type 'exit' to quit")
     print("=" * 60 + "\n")
 
     while True:
-        user_input = input("คุณ: ").strip()
+        user_input = input("You: ").strip()
         if not user_input:
             continue
         if user_input.lower() == "exit":
             break
-        print("\n[กำลังคิด...]\n" + "-" * 40)
+        print("\n[Thinking...]\n" + "-" * 40)
         try:
-            print(f"ต้อเติม:\n{chat(user_input)}")
+            print(f"Torterm:\n{chat(user_input)}")
         except RuntimeError as e:
             print(f"Error: {e}")
         print("=" * 60 + "\n")
