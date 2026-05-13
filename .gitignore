@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -142,3 +143,9 @@ vite.config.ts.timestamp-*
 venv/
 __pycache__/
 *.pyc
+=======
+venv/
+__pycache__/
+*.pyc
+data/*.png
+>>>>>>> 7bfa29604e1639852b8d54a6cd204d576fab99e9

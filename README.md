@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Torterm
 
 **Torterm** is a conversational assistant for **residential exterior design** in Thailand.  
@@ -10,3 +11,6 @@ The stack combines **large language models (LLMs)**, **retrieval-augmented gener
 ---
 
 MIT License
+=======
+# homeprodata
+>>>>>>> 7bfa29604e1639852b8d54a6cd204d576fab99e9
