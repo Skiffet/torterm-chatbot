@@ -112,13 +112,13 @@ def format_products_for_prompt(products: list[dict]) -> str:
     """Format product list as a readable text block for Gemini prompts."""
     lines = []
     for p in products:
-        price_text = f"{p['price']} บาท"
+        price_text = f"{p['price']} THB"
         if p.get("original_price") and p["original_price"] != p["price"]:
-            price_text += f" (ลดจาก {p['original_price']} บาท)"
+            price_text += f" (discounted from {p['original_price']} THB)"
         lines.append(
-            f"- ชื่อ: {p['name']}\n"
-            f"  หมวดหมู่: {p['category']} | แบรนด์: {p.get('brand', '-')}\n"
-            f"  ราคา: {price_text}\n"
-            f"  รูป: {p.get('image', '-')}\n"
+            f"- Name: {p['name']}\n"
+            f"  Category: {p['category']} | Brand: {p.get('brand', '-')}\n"
+            f"  Price: {price_text}\n"
+            f"  Image: {p.get('image', '-')}\n"
         )
     return "\n".join(lines)
