@@ -1,0 +1,5 @@
+playwright==1.44.0
+asyncio
+pandas==2.2.2
+aiofiles==23.2.1
+tqdm==4.66.4
