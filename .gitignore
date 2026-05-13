@@ -154,7 +154,6 @@ backend/db.sqlite3
 # MLflow
 notebooks/mlruns/
 notebooks/mlruns.db
-notebooks/artifacts/
 
 # Notebook output images
 notebooks/*.png
