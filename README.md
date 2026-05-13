@@ -56,7 +56,7 @@ Open `backend/.env` and fill in your Gemini API key:
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-> **Note on image generation:** The AI-renovated house image requires a paid Gemini API key (billing enabled on Google Cloud). The free tier has zero quota for image models. Everything else (text analysis + product cards) works on the free key.
+> **Note on image generation:** The "AI Renovated Design" panel requires a **paid Gemini API key with credits** (billing enabled at [aistudio.google.com](https://aistudio.google.com)). The free tier has zero quota for image generation models. Everything else — text analysis, product recommendations, and RAG — works on the free key.
 
 ### Apply database migrations
 
