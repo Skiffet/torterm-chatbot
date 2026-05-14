@@ -22,7 +22,7 @@ Make sure you have these installed before starting:
 ## 1 — Clone the repo
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Skiffet/torterm-chatbot.git
 cd torterm-chatbot
 ```
 
@@ -143,3 +143,7 @@ torterm-chatbot/
 | `npm: command not found` | Install Node.js from [nodejs.org](https://nodejs.org) |
 | Image renovation shows "unavailable" | Gemini image models require billing — enable it on your API key project |
 | CORS error in browser | Make sure Django is running on port 8000 before starting the frontend |
+
+
+## Example of output
+![alt text](image.png)
