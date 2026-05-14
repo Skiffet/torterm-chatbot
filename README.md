@@ -147,3 +147,6 @@ torterm-chatbot/
 
 ## Example of output
 ![alt text](image.png)
+
+## For AI-Enabled
+https://drive.google.com/file/d/1jqQMt1oKWCK53TZ7I8Lt5xPFd1UWGj7Z/view?usp=sharing
