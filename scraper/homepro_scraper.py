@@ -15,7 +15,7 @@ DATA_DIR.mkdir(exist_ok=True)
 SCROLL_PAUSE = 0.8
 MAX_SCROLL_ROUNDS = 40
 DELAY_BETWEEN_PRODUCTS = 1.2
-PRODUCTS_PER_CATEGORY = 10  # จำกัดจำนวนสินค้าต่อหมวดหมู่
+PRODUCTS_PER_CATEGORY = 25  # จำกัดจำนวนสินค้าต่อหมวดหมู่
 
 
 def parse_price(text: str) -> Optional[str]:
@@ -53,7 +53,9 @@ async def get_product_links(page: Page, category_url: str) -> list[str]:
     links = await page.evaluate("""() =>
         [...new Set([...document.querySelectorAll('a')].map(a => a.href).filter(h => h.includes('/p/')))]
     """)
-    return links
+    # Links without this tag belong to a site-wide "recommended for you" widget shown
+    # at the top of every category page, not the actual category grid — drop them.
+    return [l for l in links if "page_ga=search_suggest" in l]
 
 
 async def scrape_product(page: Page, url: str, category_name: str) -> Optional[dict]:
@@ -63,17 +65,29 @@ async def scrape_product(page: Page, url: str, category_name: str) -> Optional[d
 
         product: dict = {"url": url, "category": category_name}
 
-        # Name
-        h1 = await page.query_selector("h1")
-        product["name"] = (await h1.inner_text()).strip() if h1 else None
+        # Name — page has a hidden/empty h1 placeholder before the real title h1
+        product["name"] = None
+        for h1 in await page.query_selector_all("h1"):
+            text = (await h1.inner_text()).strip()
+            if text:
+                product["name"] = text
+                break
 
-        # Current price
-        price_el = await page.query_selector(".discount-price")
-        product["price"] = parse_price(await price_el.inner_text() if price_el else "")
-
-        # Original price
-        orig_el = await page.query_selector(".original-price")
-        product["original_price"] = parse_price(await orig_el.inner_text() if orig_el else "")
+        # Price — scoped to the main price box, since price classes also appear
+        # in "related products" widgets elsewhere on the page.
+        price_box = await page.query_selector(".product-price-container")
+        price_text = orig_price_text = ""
+        if price_box:
+            discount_el = await price_box.query_selector(".discount-price")
+            if discount_el:
+                price_text = await discount_el.inner_text()
+                orig_el = await price_box.query_selector(".original-price")
+                orig_price_text = await orig_el.inner_text() if orig_el else ""
+            else:
+                normal_el = await price_box.query_selector(".normal-price")
+                price_text = await normal_el.inner_text() if normal_el else ""
+        product["price"] = parse_price(price_text)
+        product["original_price"] = parse_price(orig_price_text)
 
         # SKU - element contains "SKU: XXXXXXX"
         sku_el = await page.query_selector(".prd-sku-sale-by, .prd-sku")
@@ -166,11 +180,16 @@ async def main():
 
         await browser.close()
 
+    deduped = {}
+    for p in all_products:
+        deduped[p.get("sku") or p["url"]] = p
+    all_products = list(deduped.values())
+
     combined_file = DATA_DIR / "homepro_exterior.json"
     with open(combined_file, "w", encoding="utf-8") as f:
         json.dump(all_products, f, ensure_ascii=False, indent=2)
 
-    print(f"\nDone! Total: {len(all_products)} products → {combined_file.name}")
+    print(f"\nDone! Total: {len(all_products)} unique products → {combined_file.name}")
 
 
 if __name__ == "__main__":
