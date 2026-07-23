@@ -42,13 +42,13 @@ export default function Hero() {
         {/* Big feature image */}
         <div className="md:col-span-2 order-2 relative rounded-3xl overflow-hidden group">
           <img
-            src="/images/solarcell.png"
-            alt="ระบบโซลาร์เซลล์บนหลังคาบ้าน"
+            src="/images/house-overview.jpg"
+            alt="บ้านหลังปรับปรุง พร้อมโซลาร์เซลล์ สวน และพื้นที่นั่งเล่นกลางแจ้ง"
             className="w-full h-56 md:h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0" />
           <span className="absolute bottom-4 left-5 text-white font-semibold text-lg drop-shadow">
-            พลังงานแสงอาทิตย์ & ระบบไฟฟ้า
+            บ้านที่ปรับปรุงแล้วสมบูรณ์แบบ
           </span>
         </div>
 
