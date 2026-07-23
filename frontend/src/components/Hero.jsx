@@ -39,12 +39,14 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Big feature image — full image, uncropped (caption is baked into the photo itself) */}
-        <div className="md:col-span-2 order-2 relative rounded-3xl overflow-hidden bg-black h-56 md:h-full flex items-center">
+        {/* Big feature image — full image, uncropped (caption is baked into the photo itself).
+            Sized by its own aspect ratio (not stretched to the grid row) so there's no
+            letterboxing / no fake "black bars" from a mismatched container height. */}
+        <div className="md:col-span-2 order-2 md:self-center rounded-3xl overflow-hidden">
           <img
             src="/images/house-overview-full.jpg"
             alt='บ้านหลังปรับปรุง พร้อมข้อความ "Outdoor Living: Your Dream Home Starts Here"'
-            className="w-full h-full object-contain"
+            className="w-full h-auto block"
           />
         </div>
 
