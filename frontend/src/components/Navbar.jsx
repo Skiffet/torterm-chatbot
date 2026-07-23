@@ -13,6 +13,7 @@ export default function Navbar() {
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
           <a href="#categories" className="hover:text-primary transition-colors">หมวดหมู่</a>
+          <a href="#products" className="hover:text-primary transition-colors">สินค้า</a>
           <a href="#how-it-works" className="hover:text-primary transition-colors">วิธีใช้งาน</a>
           <a href="#stats" className="hover:text-primary transition-colors">เกี่ยวกับเรา</a>
         </nav>

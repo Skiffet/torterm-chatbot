@@ -1,32 +1,42 @@
 const CATEGORIES = [
   {
-    image: '/images/solarcell.png',
-    title: 'พลังงานแสงอาทิตย์',
-    desc: 'แผงโซลาร์เซลล์ อินเวอร์เตอร์ แบตเตอรี่กักเก็บพลังงาน',
+    image: '/images/painting.jpg',
+    title: 'สีและอุปกรณ์ทาสี',
+    desc: 'สีทาภายนอก สีทาหลังคา สีย้อมไม้ แปรงและลูกกลิ้ง',
+    groupId: 'paint',
   },
   {
     image: '/images/door.png',
     title: 'ประตู & Smart Lock',
     desc: 'ประตูอลูมิเนียม UPVC กลอนดิจิทัล กริ่งกล้อง',
+    groupId: 'door-window',
   },
   {
     image: '/images/backyard.png',
     title: 'สวน & ภูมิทัศน์',
     desc: 'ทางเดินหิน รั้ว หญ้าเทียม ไฟส่องสวน',
+    groupId: 'garden-outdoor',
   },
   {
     image: '/images/roofing-gutter.png',
     title: 'หลังคา & รางน้ำ',
     desc: 'กระเบื้องหลังคา รางน้ำฝน กันสาด ฉนวนกันความร้อน',
+    groupId: 'roof-structure',
   },
   {
     image: '/images/patio.png',
     title: 'พื้นที่นั่งเล่นกลางแจ้ง',
     desc: 'เฟอร์นิเจอร์นอกบ้าน กล้องวงจรปิด ไฟและของแต่งสวน',
+    groupId: 'garden-outdoor',
   },
 ]
 
-export default function CategoryGrid() {
+export default function CategoryGrid({ onSelectGroup }) {
+  const handleClick = (groupId) => {
+    onSelectGroup?.(groupId)
+    document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <section id="categories" className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
       <div className="max-w-2xl mb-10 md:mb-14">
@@ -42,9 +52,10 @@ export default function CategoryGrid() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
         {CATEGORIES.map((c) => (
-          <div
+          <button
             key={c.title}
-            className="group rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
+            onClick={() => handleClick(c.groupId)}
+            className="group text-left rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
           >
             <div className="h-36 overflow-hidden">
               <img
@@ -57,7 +68,7 @@ export default function CategoryGrid() {
               <h3 className="font-bold text-gray-900 mb-1">{c.title}</h3>
               <p className="text-sm text-gray-500 leading-snug">{c.desc}</p>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </section>
