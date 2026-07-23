@@ -40,13 +40,13 @@ export default function Hero() {
         </div>
 
         {/* Big feature image — full image, uncropped (caption is baked into the photo itself).
-            Sized by its own aspect ratio (not stretched to the grid row) so there's no
-            letterboxing / no fake "black bars" from a mismatched container height. */}
-        <div className="md:col-span-2 order-2 md:self-center rounded-3xl overflow-hidden">
+            Stretches to match the text card's height; bg-white (not black) means any
+            leftover letterbox space reads as a clean margin, not a stray bar. */}
+        <div className="md:col-span-2 order-2 rounded-3xl overflow-hidden bg-white">
           <img
             src="/images/house-overview-full.jpg"
             alt='บ้านหลังปรับปรุง พร้อมข้อความ "Outdoor Living: Your Dream Home Starts Here"'
-            className="w-full h-auto block"
+            className="w-full h-full object-contain"
           />
         </div>
 
