@@ -1,4 +1,8 @@
+import { useLanguage } from '../i18n/LanguageContext'
+
 export default function Navbar() {
+  const { lang, setLang, t } = useLanguage()
+
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
@@ -12,18 +16,39 @@ export default function Navbar() {
         </a>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-          <a href="#categories" className="hover:text-primary transition-colors">หมวดหมู่</a>
-          <a href="#products" className="hover:text-primary transition-colors">สินค้า</a>
-          <a href="#how-it-works" className="hover:text-primary transition-colors">วิธีใช้งาน</a>
-          <a href="#stats" className="hover:text-primary transition-colors">เกี่ยวกับเรา</a>
+          <a href="#categories" className="hover:text-primary transition-colors">{t('nav.categories')}</a>
+          <a href="#products" className="hover:text-primary transition-colors">{t('nav.products')}</a>
+          <a href="#how-it-works" className="hover:text-primary transition-colors">{t('nav.howItWorks')}</a>
+          <a href="#stats" className="hover:text-primary transition-colors">{t('nav.about')}</a>
         </nav>
 
-        <a
-          href="#cta"
-          className="bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors shadow-sm"
-        >
-          เริ่มใช้งาน
-        </a>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center bg-gray-100 rounded-full p-1 text-xs font-semibold">
+            <button
+              onClick={() => setLang('th')}
+              className={`px-2.5 py-1 rounded-full transition-colors ${
+                lang === 'th' ? 'bg-primary text-white' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              ไทย
+            </button>
+            <button
+              onClick={() => setLang('en')}
+              className={`px-2.5 py-1 rounded-full transition-colors ${
+                lang === 'en' ? 'bg-primary text-white' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              EN
+            </button>
+          </div>
+
+          <a
+            href="#cta"
+            className="bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors shadow-sm"
+          >
+            {t('nav.cta')}
+          </a>
+        </div>
       </div>
     </header>
   )

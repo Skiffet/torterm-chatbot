@@ -1,9 +1,11 @@
-function formatPrice(value) {
-  return value != null ? `${value.toLocaleString('th-TH')} ฿` : 'สอบถามราคา'
-}
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function ProductCard({ product }) {
+  const { t } = useLanguage()
   const hasDiscount = product.originalPrice && product.originalPrice > product.price
+
+  const formatPrice = (value) =>
+    value != null ? `${value.toLocaleString('th-TH')} ฿` : t('products.contactForPrice')
 
   return (
     <a
@@ -22,7 +24,7 @@ export default function ProductCard({ product }) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-300 text-xs">
-            ไม่มีรูปภาพ
+            {t('products.noImage')}
           </div>
         )}
       </div>

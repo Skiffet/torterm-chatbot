@@ -1,8 +1,10 @@
-// Maps the 40 scraped subcategories into broader shopping groups for filtering.
+// Maps the 40 scraped subcategories (real Thai category strings from the
+// scraped data — never translated) into broader shopping groups for filtering.
+// `labelKey` points into translations.js's `categoryFilters` for the display label.
 export const CATEGORY_GROUPS = [
   {
     id: 'door-window',
-    label: 'ประตู & หน้าต่าง',
+    labelKey: 'categoryFilters.doorWindow',
     categories: [
       'ประตูภายนอก',
       'ประตูอลูมิเนียม',
@@ -15,7 +17,7 @@ export const CATEGORY_GROUPS = [
   },
   {
     id: 'floor-wall',
-    label: 'พื้น & ผนัง',
+    labelKey: 'categoryFilters.floorWall',
     categories: [
       'กระเบื้องพื้นภายนอก',
       'หินธรรมชาติ',
@@ -26,7 +28,7 @@ export const CATEGORY_GROUPS = [
   },
   {
     id: 'roof-structure',
-    label: 'หลังคา & โครงสร้าง',
+    labelKey: 'categoryFilters.roofStructure',
     categories: [
       'กันสาด',
       'รางน้ำฝนและอุปกรณ์',
@@ -47,7 +49,7 @@ export const CATEGORY_GROUPS = [
   },
   {
     id: 'garden-outdoor',
-    label: 'สวน & เฟอร์นิเจอร์นอกบ้าน',
+    labelKey: 'categoryFilters.gardenOutdoor',
     categories: [
       'รั้ว',
       'ทางเท้า',
@@ -60,7 +62,7 @@ export const CATEGORY_GROUPS = [
   },
   {
     id: 'paint',
-    label: 'สีและอุปกรณ์ทาสี',
+    labelKey: 'categoryFilters.paint',
     categories: [
       'สีน้ำทาภายนอก',
       'สีผสมทาภายนอก',

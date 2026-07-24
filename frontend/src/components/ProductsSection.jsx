@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import ProductCard from './ProductCard'
 import { CATEGORY_GROUPS, groupIdForCategory } from '../data/categoryGroups'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const PAGE_SIZE = 20
 
 export default function ProductsSection({ activeGroup, onChangeGroup }) {
+  const { t } = useLanguage()
   const [products, setProducts] = useState([])
   const [status, setStatus] = useState('loading') // loading | ready | error
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
@@ -38,10 +40,10 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
   return (
     <section id="products" className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
       <div className="max-w-2xl mb-8">
-        <span className="text-primary font-semibold text-sm uppercase tracking-wide">สินค้าทั้งหมด</span>
-        <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mt-2">เลือกซื้อวัสดุจริงจากแคตตาล็อก</h2>
+        <span className="text-primary font-semibold text-sm uppercase tracking-wide">{t('products.eyebrow')}</span>
+        <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mt-2">{t('products.title')}</h2>
         <p className="text-gray-500 mt-3 text-base md:text-lg">
-          สินค้า 903 รายการ จาก 40 หมวดหมู่ย่อย กรองตามกลุ่มที่ต้องการได้เลย
+          {t('products.description')}
         </p>
       </div>
 
@@ -55,7 +57,7 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
         >
-          ทั้งหมด
+          {t('categoryFilters.all')}
         </button>
         {CATEGORY_GROUPS.map((g) => (
           <button
@@ -67,7 +69,7 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
-            {g.label}
+            {t(g.labelKey)}
           </button>
         ))}
       </div>
@@ -81,7 +83,7 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
       )}
 
       {status === 'error' && (
-        <p className="text-gray-400 text-sm">โหลดสินค้าไม่สำเร็จ ลองรีเฟรชหน้าใหม่อีกครั้ง</p>
+        <p className="text-gray-400 text-sm">{t('products.loadError')}</p>
       )}
 
       {status === 'ready' && (
@@ -93,7 +95,7 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
           </div>
 
           <p className="text-center text-gray-400 text-sm mt-6">
-            แสดง {visible.length} จาก {filtered.length} รายการ
+            {t('products.showingCount')(visible.length, filtered.length)}
           </p>
 
           {visibleCount < filtered.length && (
@@ -102,7 +104,7 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
                 className="px-6 py-2.5 rounded-full border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
               >
-                ดูเพิ่มเติม
+                {t('products.loadMore')}
               </button>
             </div>
           )}

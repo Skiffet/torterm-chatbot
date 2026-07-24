@@ -1,37 +1,16 @@
+import { useLanguage } from '../i18n/LanguageContext'
+
 const CATEGORIES = [
-  {
-    image: '/images/painting.jpg',
-    title: 'สีและอุปกรณ์ทาสี',
-    desc: 'สีทาภายนอก สีทาหลังคา สีย้อมไม้ แปรงและลูกกลิ้ง',
-    groupId: 'paint',
-  },
-  {
-    image: '/images/door.png',
-    title: 'ประตู & Smart Lock',
-    desc: 'ประตูอลูมิเนียม UPVC กลอนดิจิทัล กริ่งกล้อง',
-    groupId: 'door-window',
-  },
-  {
-    image: '/images/backyard.png',
-    title: 'สวน & ภูมิทัศน์',
-    desc: 'ทางเดินหิน รั้ว หญ้าเทียม ไฟส่องสวน',
-    groupId: 'garden-outdoor',
-  },
-  {
-    image: '/images/roofing-gutter.png',
-    title: 'หลังคา & รางน้ำ',
-    desc: 'กระเบื้องหลังคา รางน้ำฝน กันสาด ฉนวนกันความร้อน',
-    groupId: 'roof-structure',
-  },
-  {
-    image: '/images/patio.png',
-    title: 'พื้นที่นั่งเล่นกลางแจ้ง',
-    desc: 'เฟอร์นิเจอร์นอกบ้าน กล้องวงจรปิด ไฟและของแต่งสวน',
-    groupId: 'garden-outdoor',
-  },
+  { image: '/images/painting.jpg', key: 'paint', groupId: 'paint' },
+  { image: '/images/door.png', key: 'door', groupId: 'door-window' },
+  { image: '/images/backyard.png', key: 'garden', groupId: 'garden-outdoor' },
+  { image: '/images/roofing-gutter.png', key: 'roof', groupId: 'roof-structure' },
+  { image: '/images/patio.png', key: 'patio', groupId: 'garden-outdoor' },
 ]
 
 export default function CategoryGrid({ onSelectGroup }) {
+  const { t } = useLanguage()
+
   const handleClick = (groupId) => {
     onSelectGroup?.(groupId)
     document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
@@ -40,33 +19,34 @@ export default function CategoryGrid({ onSelectGroup }) {
   return (
     <section id="categories" className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
       <div className="max-w-2xl mb-10 md:mb-14">
-        <span className="text-primary font-semibold text-sm uppercase tracking-wide">หมวดหมู่สินค้า</span>
+        <span className="text-primary font-semibold text-sm uppercase tracking-wide">
+          {t('categoryGrid.eyebrow')}
+        </span>
         <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mt-2">
-          ครอบคลุมทุกส่วนของบ้านภายนอก
+          {t('categoryGrid.title')}
         </h2>
         <p className="text-gray-500 mt-3 text-base md:text-lg">
-          รวมวัสดุและอุปกรณ์ปรับปรุงบ้านกว่า 900 รายการ จาก 40 หมวดหมู่ย่อย
-          พร้อมให้ AI แนะนำตามความต้องการของคุณ
+          {t('categoryGrid.description')}
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
         {CATEGORIES.map((c) => (
           <button
-            key={c.title}
+            key={c.key}
             onClick={() => handleClick(c.groupId)}
             className="group text-left rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
           >
             <div className="h-36 overflow-hidden">
               <img
                 src={c.image}
-                alt={c.title}
+                alt={t(`categoryGrid.cards.${c.key}.title`)}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div className="p-4">
-              <h3 className="font-bold text-gray-900 mb-1">{c.title}</h3>
-              <p className="text-sm text-gray-500 leading-snug">{c.desc}</p>
+              <h3 className="font-bold text-gray-900 mb-1">{t(`categoryGrid.cards.${c.key}.title`)}</h3>
+              <p className="text-sm text-gray-500 leading-snug">{t(`categoryGrid.cards.${c.key}.desc`)}</p>
             </div>
           </button>
         ))}
