@@ -9,3 +9,11 @@ html {
 body {
   font-family: 'Noto Sans Thai', 'Inter', system-ui, sans-serif;
 }
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
