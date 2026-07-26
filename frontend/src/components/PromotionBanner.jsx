@@ -14,10 +14,11 @@ export default function PromotionBanner() {
   }
 
   return (
-    <section className="max-w-4xl mx-auto px-6 md:px-10 pb-10 md:pb-14">
+    <section className="max-w-7xl mx-auto px-6 md:px-10 pb-10 md:pb-14">
       <div className="relative">
-        {/* Scroll track — each slide is ~92% of the frame width, so the next
-            slide always peeks in at the edge as a hint that there's more. */}
+        {/* Scroll track — each slide is narrower than the frame, so the next
+            slide visibly peeks in and gets clipped by the frame edge, same
+            as the product carousel. */}
         <div
           ref={trackRef}
           className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide"
@@ -25,7 +26,7 @@ export default function PromotionBanner() {
           {SLIDES.map((src, i) => (
             <div
               key={src}
-              className="shrink-0 w-[92%] snap-start rounded-3xl overflow-hidden shadow-sm"
+              className="shrink-0 w-[82%] md:w-[78%] snap-start rounded-3xl overflow-hidden shadow-sm"
             >
               <img
                 src={src}
@@ -35,11 +36,6 @@ export default function PromotionBanner() {
             </div>
           ))}
         </div>
-
-        {/* Blurred edge hint — frosted-glass overlay over the peeking sliver
-            of the next slide, on both sides so it works mid-scroll too. */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-10 md:w-14 bg-white/25 backdrop-blur-md [mask-image:linear-gradient(to_left,black,transparent)]" />
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-10 md:w-14 bg-white/25 backdrop-blur-md [mask-image:linear-gradient(to_right,black,transparent)]" />
 
         {/* Click-to-scroll arrows — native horizontal scroll isn't discoverable
             with a plain mouse (needs a trackpad or shift+wheel), so give
