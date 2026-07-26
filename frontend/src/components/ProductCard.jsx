@@ -1,43 +1,48 @@
+import { useLanguage } from '../i18n/LanguageContext'
+
 export default function ProductCard({ product }) {
-  const price = product.price ? `${Number(product.price).toLocaleString()} Baht` : 'N/A'
+  const { t } = useLanguage()
+  const hasDiscount = product.originalPrice && product.originalPrice > product.price
+
+  const formatPrice = (value) =>
+    value != null ? `${value.toLocaleString('th-TH')} ฿` : t('products.contactForPrice')
 
   return (
-    <div className="flex-shrink-0 w-52 bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm">
-      <div className="flex gap-3 p-3">
-        {/* Product image */}
-        <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-gray-100 overflow-hidden">
-          {product.image ? (
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-contain"
-              onError={(e) => {
-                e.target.style.display = 'none'
-                e.target.parentNode.classList.add('flex', 'items-center', 'justify-center')
-              }}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <svg className="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-          )}
-        </div>
-
-        {/* Info */}
-        <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-gray-800 leading-tight line-clamp-2 mb-1">
-            {product.name}
-          </p>
-          <p className="text-[11px] text-gray-400">Brand: {product.brand || '—'}</p>
-          <p className="text-xs font-bold text-primary mt-1">{price}</p>
-        </div>
+    <a
+      href={product.url}
+      target="_blank"
+      rel="noreferrer"
+      className="group flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+    >
+      <div className="aspect-square bg-gray-50 overflow-hidden">
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            loading="lazy"
+            className="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-300 text-xs">
+            {t('products.noImage')}
+          </div>
+        )}
       </div>
 
-      <button className="w-full bg-primary hover:bg-primary-dark text-white text-xs font-medium py-2 transition-colors">
-        Add to Cart
-      </button>
-    </div>
+      <div className="p-3 flex-1 flex flex-col gap-1">
+        <p className="text-[11px] text-gray-400">{product.brand || '—'}</p>
+        <p className="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 flex-1">
+          {product.name}
+        </p>
+        <div className="flex items-baseline gap-2 mt-1">
+          <span className="text-base font-bold text-primary">{formatPrice(product.price)}</span>
+          {hasDiscount && (
+            <span className="text-xs text-gray-400 line-through">
+              {formatPrice(product.originalPrice)}
+            </span>
+          )}
+        </div>
+      </div>
+    </a>
   )
 }

@@ -7,6 +7,9 @@ export default {
         primary: '#1E4DB7',
         'primary-dark': '#1a3f9e',
       },
+      fontFamily: {
+        sans: ['"Noto Sans Thai"', '"Inter"', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [],
