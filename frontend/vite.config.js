@@ -42,12 +42,27 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg}', 'icons/*.png'],
         runtimeCaching: [
           {
-            urlPattern: /\/images\/.*\.png$/,
+            urlPattern: /\/images\/.*\.(png|jpg|jpeg)$/,
             handler: 'CacheFirst',
             options: {
               cacheName: 'hero-images',
               expiration: {
                 maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+            },
+          },
+          {
+            // The two Higgsfield clips are ~5 MB combined — cache them after
+            // the first visit so repeat loads don't re-download them, and
+            // allow range requests so seeking still works.
+            urlPattern: /\/video\/.*\.mp4$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'hero-video',
+              rangeRequests: true,
+              expiration: {
+                maxEntries: 4,
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
               },
             },

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
+import WholesaleHero from './components/wholesale/WholesaleHero'
+import EntryExperience from './components/wholesale/EntryExperience'
 import CategoryGrid from './components/CategoryGrid'
 import ProductsSection from './components/ProductsSection'
 import StatsBar from './components/StatsBar'
@@ -19,14 +20,14 @@ export default function App() {
     document.documentElement.lang = lang
     document.title =
       lang === 'th'
-        ? 'Torterm — ผู้ช่วย AI ปรับปรุงบ้านภายนอก'
-        : 'Torterm — AI Home Exterior Renovation'
+        ? 'Torterm — ศูนย์รวมวัสดุก่อสร้างและผู้ช่วย AI'
+        : 'Torterm — Construction Materials & AI Assistant'
   }, [lang])
 
   return (
     <div className="bg-white">
       <Navbar />
-      <Hero />
+      <WholesaleHero />
       <CategoryGrid onSelectGroup={setActiveGroup} />
       <PromotionBanner />
       <ProductsSection activeGroup={activeGroup} onChangeGroup={setActiveGroup} />
@@ -35,6 +36,7 @@ export default function App() {
       <CTASection />
       <Footer />
       <AskAiButton />
+      <EntryExperience />
     </div>
   )
 }
