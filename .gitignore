@@ -157,3 +157,14 @@ notebooks/mlruns.db
 
 # Notebook output images
 notebooks/*.png
+
+# Higgsfield CLI skills — installed per-machine, not project code
+.agents/
+skills-lock.json
+
+# Agent tooling installed locally (11MB). Left as a path rather than `.claude/`
+# so project-level Claude settings can still be committed later.
+.claude/skills/
+
+# macOS
+.DS_Store

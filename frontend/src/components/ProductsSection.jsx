@@ -1,36 +1,27 @@
 import { useEffect, useMemo, useState } from 'react'
 import ProductCard from './ProductCard'
-import { CATEGORY_GROUPS, groupIdForCategory } from '../data/categoryGroups'
+import Reveal from './ui/Reveal'
+import { CATEGORY_GROUPS } from '../data/categoryGroups'
+import { useCatalog } from '../context/CatalogContext'
 import { useLanguage } from '../i18n/LanguageContext'
+import { productsInGroup } from '../lib/catalog'
 
 const PAGE_SIZE = 20
 
 export default function ProductsSection({ activeGroup, onChangeGroup }) {
   const { t } = useLanguage()
-  const [products, setProducts] = useState([])
-  const [status, setStatus] = useState('loading') // loading | ready | error
+  // The catalogue is loaded once by CatalogProvider and shared with the rails
+  // above; this section used to fetch products.json a second time on its own.
+  const { products, status } = useCatalog()
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
-  useEffect(() => {
-    fetch('/data/products.json')
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        return res.json()
-      })
-      .then((data) => {
-        setProducts(data)
-        setStatus('ready')
-      })
-      .catch(() => setStatus('error'))
-  }, [])
-
-  const filtered = useMemo(() => {
-    if (activeGroup === 'all') return products
-    return products.filter((p) => groupIdForCategory(p.category) === activeGroup)
-  }, [products, activeGroup])
+  const filtered = useMemo(
+    () => productsInGroup(products, activeGroup),
+    [products, activeGroup],
+  )
 
   // Reset pagination whenever the active group changes, whether triggered by
-  // the pills below or by clicking a category card up in CategoryGrid.
+  // the pills below or by a category card further up the page.
   useEffect(() => {
     setVisibleCount(PAGE_SIZE)
   }, [activeGroup])
@@ -38,23 +29,24 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
   const visible = filtered.slice(0, visibleCount)
 
   return (
-    <section id="products" className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
-      <div className="max-w-2xl mb-8">
-        <span className="text-primary font-semibold text-sm uppercase tracking-wide">{t('products.eyebrow')}</span>
-        <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mt-2">{t('products.title')}</h2>
-        <p className="text-gray-500 mt-3 text-base md:text-lg">
-          {t('products.description')}
+    <section id="products" className="max-w-page mx-auto px-6 md:px-10 py-20 md:py-24">
+      <Reveal className="max-w-2xl mb-8">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">
+          FULL CATALOGUE
         </p>
-      </div>
+        <h2 className="text-display mt-3 text-3xl md:text-[2.75rem] font-semibold text-ink">
+          {t('products.title')}
+        </h2>
+        <p className="mt-4 text-gray-500 text-base md:text-lg">{t('products.description')}</p>
+      </Reveal>
 
-      {/* Filter pills */}
       <div className="flex flex-wrap gap-2 mb-8">
         <button
           onClick={() => onChangeGroup('all')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+          className={`px-4 py-2 text-sm font-medium border transition-colors ${
             activeGroup === 'all'
-              ? 'bg-primary text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              ? 'bg-ink text-white border-ink'
+              : 'bg-white text-ink/60 border-line hover:border-ink hover:text-ink'
           }`}
         >
           {t('categoryFilters.all')}
@@ -63,10 +55,10 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
           <button
             key={g.id}
             onClick={() => onChangeGroup(g.id)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-4 py-2 text-sm font-medium border transition-colors ${
               activeGroup === g.id
-                ? 'bg-primary text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                ? 'bg-ink text-white border-ink'
+                : 'bg-white text-ink/60 border-line hover:border-ink hover:text-ink'
             }`}
           >
             {t(g.labelKey)}
@@ -77,14 +69,12 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
       {status === 'loading' && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="aspect-square bg-gray-100 rounded-2xl animate-pulse" />
+            <div key={i} className="aspect-[3/4] bg-concrete animate-pulse" />
           ))}
         </div>
       )}
 
-      {status === 'error' && (
-        <p className="text-gray-400 text-sm">{t('products.loadError')}</p>
-      )}
+      {status === 'error' && <p className="text-gray-400 text-sm">{t('products.loadError')}</p>}
 
       {status === 'ready' && (
         <>
@@ -94,7 +84,7 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
             ))}
           </div>
 
-          <p className="text-center text-gray-400 text-sm mt-6">
+          <p className="text-center text-gray-400 text-sm mt-8 tabular-nums">
             {t('products.showingCount')(visible.length, filtered.length)}
           </p>
 
@@ -102,7 +92,7 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
             <div className="flex justify-center mt-4">
               <button
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                className="px-6 py-2.5 rounded-full border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                className="px-7 py-3 border border-line text-ink font-medium hover:bg-ink hover:text-white hover:border-ink transition-colors"
               >
                 {t('products.loadMore')}
               </button>

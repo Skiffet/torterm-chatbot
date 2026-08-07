@@ -1,11 +1,11 @@
 import { useLanguage } from '../i18n/LanguageContext'
 
 const CATEGORIES = [
-  { image: '/images/painting.jpg', key: 'paint', groupId: 'paint' },
-  { image: '/images/door.png', key: 'door', groupId: 'door-window' },
-  { image: '/images/backyard.png', key: 'garden', groupId: 'garden-outdoor' },
-  { image: '/images/roofing-gutter.png', key: 'roof', groupId: 'roof-structure' },
-  { image: '/images/patio.png', key: 'patio', groupId: 'garden-outdoor' },
+  { image: '/images/painting.webp', key: 'paint', groupId: 'paint' },
+  { image: '/images/door.webp', key: 'door', groupId: 'door-window' },
+  { image: '/images/backyard.webp', key: 'garden', groupId: 'garden-outdoor' },
+  { image: '/images/roofing-gutter.webp', key: 'roof', groupId: 'roof-structure' },
+  { image: '/images/patio.webp', key: 'patio', groupId: 'garden-outdoor' },
 ]
 
 export default function CategoryGrid({ onSelectGroup }) {

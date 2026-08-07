@@ -1,10 +1,10 @@
 import { useLanguage } from '../i18n/LanguageContext'
 
 const THUMB_IMAGES = [
-  { src: '/images/backyard.png', key: 'garden' },
-  { src: '/images/door.png', key: 'door' },
-  { src: '/images/patio.png', key: 'patio' },
-  { src: '/images/roofing-gutter.png', key: 'roof' },
+  { src: '/images/backyard.webp', key: 'garden' },
+  { src: '/images/door.webp', key: 'door' },
+  { src: '/images/patio.webp', key: 'patio' },
+  { src: '/images/roofing-gutter.webp', key: 'roof' },
 ]
 
 export default function Hero() {

@@ -7,7 +7,7 @@ export default function CTASection() {
     <section id="cta" className="max-w-7xl mx-auto px-6 md:px-10 pb-20 md:pb-28">
       <div className="relative rounded-3xl overflow-hidden">
         <img
-          src="/images/patio.png"
+          src="/images/patio.webp"
           alt={t('cta.imageAlt')}
           className="w-full h-72 md:h-96 object-cover"
         />
