@@ -36,7 +36,7 @@ export default function WholesaleHero() {
         preload="auto"
         onLoadedData={() => setVideoReady(true)}
         animate={{ scale: zooming ? 2.6 : 1 }}
-        transition={{ duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
+        transition={{ duration: 1.3, ease: [0.4, 0, 0.2, 1] }}
         onAnimationComplete={() => {
           if (zooming) {
             enterWithTransition()

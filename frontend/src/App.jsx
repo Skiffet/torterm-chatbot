@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import WholesaleHero from './components/wholesale/WholesaleHero'
+import HouseRotationSection from './components/HouseRotationSection'
 import EntryExperience from './components/wholesale/EntryExperience'
 import CategoryGrid from './components/CategoryGrid'
 import ProductsSection from './components/ProductsSection'
@@ -28,6 +29,7 @@ export default function App() {
     <div className="bg-white">
       <Navbar />
       <WholesaleHero />
+      <HouseRotationSection />
       <CategoryGrid onSelectGroup={setActiveGroup} />
       <PromotionBanner />
       <ProductsSection activeGroup={activeGroup} onChangeGroup={setActiveGroup} />

@@ -4,6 +4,17 @@ import AuthPanel from './AuthPanel'
 import Icon from './Icon'
 import { useAuth } from '../../store/AuthContext'
 
+// Pacing for the whole entry beat, kept together so the sequence can be tuned
+// in one place. The clip is nudged slightly past 1x rather than cut short —
+// the door still opens fully, it just gets there sooner.
+const CLIP_RATE = 1.2
+const CLIP_SECONDS = 5.05 // measured from the file's mvhd box
+const OVERLAY_FADE = 0.3
+const DIM_FADE = 0.6
+const PANEL_FADE = 0.55
+// Fallback reveal, with headroom over the sped-up clip's real runtime.
+const PANEL_FALLBACK_MS = (CLIP_SECONDS / CLIP_RATE) * 1000 + 1000
+
 // Full-screen entry overlay. When opened from the hero it first plays the
 // door-opening clip, then settles on its final frame and fades the auth card
 // in on top. Opened from the navbar it skips straight to the card.
@@ -39,7 +50,7 @@ export default function EntryExperience() {
   // behind a video that will not finish.
   useEffect(() => {
     if (!open || !withTransition) return undefined
-    const timer = setTimeout(() => setShowPanel(true), 6500)
+    const timer = setTimeout(() => setShowPanel(true), PANEL_FALLBACK_MS)
     return () => clearTimeout(timer)
   }, [open, withTransition])
 
@@ -50,7 +61,7 @@ export default function EntryExperience() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: OVERLAY_FADE }}
           className="fixed inset-0 z-[95] overflow-hidden bg-ink"
           role="dialog"
           aria-modal="true"
@@ -58,6 +69,14 @@ export default function EntryExperience() {
         >
           {withTransition ? (
             <video
+              // playbackRate resets whenever a new source loads, so set it on
+              // the element itself rather than once on mount.
+              ref={(el) => {
+                if (el) el.playbackRate = CLIP_RATE
+              }}
+              onLoadedMetadata={(e) => {
+                e.currentTarget.playbackRate = CLIP_RATE
+              }}
               src="/video/enter-house.mp4"
               autoPlay
               muted
@@ -78,7 +97,7 @@ export default function EntryExperience() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: showPanel ? 1 : 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: DIM_FADE }}
             className="absolute inset-0 bg-gradient-to-br from-ink-900/80 via-ink/75 to-ink/90 backdrop-blur-[2px]"
           />
 
@@ -95,7 +114,7 @@ export default function EntryExperience() {
               <motion.div
                 initial={{ opacity: 0, y: 30, scale: 0.97 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: PANEL_FADE, ease: [0.16, 1, 0.3, 1] }}
                 className="relative h-full w-full overflow-y-auto flex items-center justify-center p-5"
               >
                 <div className="w-full max-w-md my-auto">

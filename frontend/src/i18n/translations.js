@@ -23,6 +23,39 @@ export const translations = {
         roof: { alt: 'หลังคาและรางน้ำ', label: 'หลังคา & รางน้ำ' },
       },
     },
+    houseRotation: {
+      loading: 'กำลังเตรียมภาพ 360°',
+      canvasLabel: 'บ้านตัวอย่างหมุนรอบ 360 องศา',
+      scrollHint: 'เลื่อนเพื่อหมุน',
+      ctaLabel: 'ดูสินค้าทั้งหมด',
+      beats: [
+        {
+          eyebrow: '360 องศา',
+          title: 'ดูให้ครบทุกด้าน ก่อนสั่งวัสดุ',
+          desc: 'บ้านตัวอย่างหนึ่งหลัง หมุนดูได้ครบทุกด้าน — ทุกมุมที่เห็นคือวัสดุจริงที่สั่งได้จาก Torterm',
+        },
+        {
+          eyebrow: 'โครงสร้าง & หลังคา',
+          title: 'ครบตั้งแต่ฐานรากถึงหลังคา',
+          desc: 'เหล็ก ปูน หลังคา ประตู หน้าต่าง สี — วัสดุกว่า 900 รายการ จาก 40 หมวดหมู่ย่อย จบในคลังเดียว',
+        },
+        {
+          eyebrow: 'ราคาส่ง',
+          title: 'ราคาช่างและผู้รับเหมา ทุกออเดอร์',
+          desc: 'เห็นราคาต่อหน่วยชัดเจน เทียบได้ก่อนตัดสินใจ ตีราคาทั้งงานได้จบในนัดเดียว',
+        },
+        {
+          eyebrow: 'ส่งถึงหน้างาน',
+          title: 'สั่งวันนี้ ส่งถึงไซต์งาน',
+          desc: 'จัดคิวรถส่งตามแผนงานของคุณ พร้อมผู้ช่วย AI ที่ดูรูปหน้างานแล้วบอกได้ทันทีว่าต้องใช้วัสดุอะไรบ้าง',
+        },
+        {
+          eyebrow: 'พร้อมเริ่มแล้ว',
+          title: 'เลือกวัสดุจากแคตตาล็อกจริง',
+          desc: 'เปิดดูสินค้าทั้งหมด พร้อมราคาและหน่วยนับจริง อัปเดตทุกวัน',
+        },
+      ],
+    },
     categoryGrid: {
       eyebrow: 'หมวดหมู่สินค้า',
       title: 'ครอบคลุมทุกส่วนของบ้านภายนอก',
@@ -107,6 +140,39 @@ export const translations = {
         patio: { alt: 'Outdoor living space', label: 'Outdoor Living' },
         roof: { alt: 'Roofing and gutters', label: 'Roofing & Gutters' },
       },
+    },
+    houseRotation: {
+      loading: 'Preparing the 360° view',
+      canvasLabel: 'Reference house rotating a full 360 degrees',
+      scrollHint: 'Scroll to rotate',
+      ctaLabel: 'Browse all products',
+      beats: [
+        {
+          eyebrow: '360 Degrees',
+          title: 'See every side before you order',
+          desc: 'One reference build, turned through a full circle — every surface you pass is a real material you can order from Torterm.',
+        },
+        {
+          eyebrow: 'Structure & Roofing',
+          title: 'Everything from footing to ridge',
+          desc: 'Steel, cement, roofing, doors, windows, paint — 900+ products across 40 subcategories, out of one warehouse.',
+        },
+        {
+          eyebrow: 'Wholesale Pricing',
+          title: 'Trade prices on every order',
+          desc: 'Clear per-unit pricing you can compare before you commit, so the whole job can be quoted in a single sitting.',
+        },
+        {
+          eyebrow: 'Site Delivery',
+          title: 'Order today, delivered to site',
+          desc: 'Deliveries scheduled around your build programme, plus an AI assistant that reads a site photo and tells you what it needs.',
+        },
+        {
+          eyebrow: 'Ready When You Are',
+          title: 'Pick your materials from the real catalogue',
+          desc: 'Browse the full range with live prices and real units of measure, updated daily.',
+        },
+      ],
     },
     categoryGrid: {
       eyebrow: 'Product Categories',

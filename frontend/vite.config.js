@@ -53,6 +53,21 @@ export default defineConfig({
             },
           },
           {
+            // The 151-frame rotation sequence is ~6 MB. It stays out of the
+            // precache (globPatterns skips .webp) so installing the PWA is
+            // still cheap, but caching it after the first scrub means repeat
+            // visits scrub instantly instead of re-downloading every frame.
+            urlPattern: /\/frames\/frame_\d+\.webp$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'house-rotation-frames',
+              expiration: {
+                maxEntries: 160,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+            },
+          },
+          {
             // The two Higgsfield clips are ~5 MB combined — cache them after
             // the first visit so repeat loads don't re-download them, and
             // allow range requests so seeking still works.
