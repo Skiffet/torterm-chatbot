@@ -48,6 +48,12 @@
       "sourceType": "github",
       "skillPath": "higgsfield-youtube-thumbnail/SKILL.md",
       "computedHash": "aade6ad4febf121bfd20feefb21c4e838043ac3d08edb33ea9e2574569d4b381"
+    },
+    "kling-cli": {
+      "source": "klingai-tech/skills",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "b5793d2dd573e4b24fc762de69a93adb9c85e525ff0d831ec5a4d5bc8151a7a8"
     }
   }
 }
