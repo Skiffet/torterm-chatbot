@@ -13,7 +13,7 @@ export function LanguageProvider({ children }) {
   const value = useMemo(() => {
     const dict = translations[lang]
     const t = (path) => getByPath(dict, path)
-    return { lang, setLang, t, dict }
+    return { lang, setLang, t }
   }, [lang])
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>

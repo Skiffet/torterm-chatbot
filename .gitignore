@@ -157,3 +157,6 @@ notebooks/mlruns.db
 
 # Notebook output images
 notebooks/*.png
+
+# macOS
+.DS_Store

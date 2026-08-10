@@ -38,22 +38,13 @@ export default {
           'linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px)',
       },
       keyframes: {
-        'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(12px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
         'toast-in': {
           '0%': { opacity: '0', transform: 'translateY(-12px) scale(.96)' },
           '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
         },
-        shimmer: {
-          '100%': { transform: 'translateX(100%)' },
-        },
       },
       animation: {
-        'fade-up': 'fade-up .5s cubic-bezier(.16,1,.3,1) both',
         'toast-in': 'toast-in .35s cubic-bezier(.16,1,.3,1) both',
-        shimmer: 'shimmer 1.8s infinite',
       },
     },
   },

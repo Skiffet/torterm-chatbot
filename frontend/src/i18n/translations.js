@@ -7,22 +7,6 @@ export const translations = {
       about: 'เกี่ยวกับเรา',
       cta: 'เริ่มใช้งาน',
     },
-    hero: {
-      badge: '✨ ขับเคลื่อนด้วย AI',
-      titleLine1: 'เปลี่ยนบ้านคุณ',
-      titleLine2: 'ให้เป็นบ้านในฝัน',
-      description:
-        'อัปโหลดรูปบ้าน บอกสิ่งที่อยากปรับปรุง แล้วให้ Torterm AI แนะนำวัสดุจริงจากแคตตาล็อกกว่า 900 รายการ พร้อมประเมินราคาให้ทันที',
-      ctaPrimary: 'เริ่มออกแบบบ้าน',
-      ctaSecondary: 'ดูหมวดหมู่สินค้า',
-      heroImageAlt: 'บ้านหลังปรับปรุง พร้อมข้อความ "Outdoor Living: Your Dream Home Starts Here"',
-      thumbs: {
-        garden: { alt: 'สวนและภูมิทัศน์', label: 'สวน & ภูมิทัศน์' },
-        door: { alt: 'ประตูและระบบรักษาความปลอดภัย', label: 'ประตู & Smart Lock' },
-        patio: { alt: 'พื้นที่นั่งเล่นกลางแจ้ง', label: 'พื้นที่นั่งเล่น' },
-        roof: { alt: 'หลังคาและรางน้ำ', label: 'หลังคา & รางน้ำ' },
-      },
-    },
     houseRotation: {
       loading: 'กำลังเตรียมภาพ 360°',
       canvasLabel: 'บ้านตัวอย่างหมุนรอบ 360 องศา',
@@ -93,15 +77,6 @@ export const translations = {
       topBrands: 'แบรนด์ชั้นนำ',
       aiAnalyze: 'วิเคราะห์ & แนะนำอัตโนมัติ',
     },
-    howItWorks: {
-      eyebrow: 'วิธีใช้งาน',
-      title: 'ง่ายแค่ 3 ขั้นตอน',
-      steps: [
-        { title: 'อัปโหลดรูปบ้าน', desc: 'ถ่ายหรืออัปโหลดรูปบ้านของคุณ พร้อมบอกสิ่งที่อยากปรับปรุง' },
-        { title: 'AI วิเคราะห์ & แนะนำ', desc: 'Torterm ค้นหาวัสดุที่เหมาะสมจากแคตตาล็อกจริง พร้อมประเมินราคา' },
-        { title: 'เห็นภาพก่อนตัดสินใจ', desc: 'ดูรูปบ้านเวอร์ชันปรับปรุงแล้ว พร้อมรายการวัสดุที่ใช้ได้จริง' },
-      ],
-    },
     cta: {
       imageAlt: 'พื้นที่นั่งเล่นกลางแจ้งหลังปรับปรุง',
       title: 'พร้อมเปลี่ยนบ้านของคุณหรือยัง?',
@@ -124,22 +99,6 @@ export const translations = {
       howItWorks: 'How It Works',
       about: 'About',
       cta: 'Get Started',
-    },
-    hero: {
-      badge: '✨ Powered by AI',
-      titleLine1: 'Transform Your Home',
-      titleLine2: 'Into Your Dream Home',
-      description:
-        "Upload a photo of your house, describe what you'd like to change, and let Torterm AI recommend real materials from our catalog of 900+ products — with an instant cost estimate.",
-      ctaPrimary: 'Start Designing',
-      ctaSecondary: 'Browse Categories',
-      heroImageAlt: 'Renovated home with "Outdoor Living: Your Dream Home Starts Here" banner',
-      thumbs: {
-        garden: { alt: 'Garden and landscaping', label: 'Garden & Landscape' },
-        door: { alt: 'Doors and security systems', label: 'Doors & Smart Lock' },
-        patio: { alt: 'Outdoor living space', label: 'Outdoor Living' },
-        roof: { alt: 'Roofing and gutters', label: 'Roofing & Gutters' },
-      },
     },
     houseRotation: {
       loading: 'Preparing the 360° view',
@@ -210,15 +169,6 @@ export const translations = {
       subCategories: 'subcategories',
       topBrands: 'top brands',
       aiAnalyze: 'automated analysis & recommendations',
-    },
-    howItWorks: {
-      eyebrow: 'How It Works',
-      title: 'Just 3 Simple Steps',
-      steps: [
-        { title: 'Upload a House Photo', desc: 'Take or upload a photo of your house, and describe what you want to change' },
-        { title: 'AI Analyzes & Recommends', desc: 'Torterm finds the right materials from the real catalog, with a cost estimate' },
-        { title: 'Preview Before You Decide', desc: 'See a renovated version of your house, with a real, usable materials list' },
-      ],
     },
     cta: {
       imageAlt: 'Renovated outdoor living space',
