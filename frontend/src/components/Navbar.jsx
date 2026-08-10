@@ -30,19 +30,20 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 md:h-20 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-2.5 shrink-0">
-          <span
-            className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
-              scrolled ? 'bg-primary' : 'bg-safety'
-            }`}
-          >
-            <svg
-              className={`w-5 h-5 ${scrolled ? 'text-white' : 'text-ink'}`}
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7H3a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 10 4a2 2 0 0 1 2-2M7 14v2h2v-2H7m8 0v2h2v-2h-2M4 20c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2v-2H4v2z" />
-            </svg>
-          </span>
+          {/* Isometric stacked-material mark. The top face is the only plane
+              that has to change with the bar: cream reads on the dark hero but
+              vanishes on white, so it steps down to a light steel once the bar
+              turns solid. Amber and navy carry the shape in both states. */}
+          <svg viewBox="0 0 64 64" className="w-9 h-9 shrink-0" aria-hidden="true">
+            <path d="M32 5 8 25 32 39Z" fill="#E8912A" />
+            <path
+              d="M32 5 56 25 32 39Z"
+              className="transition-colors"
+              fill={scrolled ? '#CBD5E1' : '#F4F1EA'}
+            />
+            <path d="M11 27.5 32 39.7 32 55 11 42.8Z" fill="#12305C" />
+            <path d="M53 27.5 53 42.8 32 55 32 39.7Z" fill="#1B3E6E" />
+          </svg>
           <span
             className={`font-extrabold text-lg tracking-tight transition-colors ${
               scrolled ? 'text-ink-900' : 'text-white'

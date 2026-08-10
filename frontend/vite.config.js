@@ -53,11 +53,11 @@ export default defineConfig({
             },
           },
           {
-            // The 151-frame rotation sequence is ~6 MB. It stays out of the
-            // precache (globPatterns skips .webp) so installing the PWA is
+            // The 151-frame rotation sequence is ~27 MB. It stays out of the
+            // precache (globPatterns skips .jpg) so installing the PWA is
             // still cheap, but caching it after the first scrub means repeat
             // visits scrub instantly instead of re-downloading every frame.
-            urlPattern: /\/frames\/frame_\d+\.webp$/,
+            urlPattern: /\/frames\/frame_\d+\.jpg$/,
             handler: 'CacheFirst',
             options: {
               cacheName: 'house-rotation-frames',

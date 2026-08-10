@@ -5,7 +5,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 const FRAME_COUNT = 151
 // Each frame is one 2.38° step, so the 151 frames add up to exactly one turn.
 const DEG_PER_FRAME = 360 / FRAME_COUNT
-// The flat backdrop baked into every WebP. Painting the canvas with the same
+// The flat backdrop baked into every frame. Painting the canvas with the same
 // colour before each draw means the letterboxing left by "contain" scaling is
 // invisible at any aspect ratio instead of reading as black bars.
 const FRAME_BG = '#0B1222'
@@ -17,7 +17,9 @@ const MAX_DPR = 2
 // one 151-request burst.
 const PRELOAD_CONCURRENCY = 8
 
-const frameSrc = (index) => `/frames/frame_${String(index + 1).padStart(4, '0')}.webp`
+// Served as the untouched source JPEGs rather than re-encoded WebP: the frames
+// are already lossy, so a second pass would only add generation loss.
+const frameSrc = (index) => `/frames/frame_${String(index + 1).padStart(4, '0')}.jpg`
 
 // Scroll windows for the five copy beats, as a fraction of the section's own
 // scroll distance. Gaps between them are deliberate — the house gets a moment
@@ -351,7 +353,7 @@ export default function HouseRotationSection() {
         className="relative w-full py-16 md:py-24"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-10">
-          <div className="relative aspect-[1280/798] w-full overflow-hidden rounded-3xl border border-white/10">
+          <div className="relative aspect-[1764/1100] w-full overflow-hidden rounded-3xl border border-white/10">
             <canvas
               ref={canvasRef}
               role="img"
@@ -394,17 +396,19 @@ export default function HouseRotationSection() {
           className="absolute inset-0 block h-full w-full"
         />
 
-        {/* Scrims sized to where the copy actually sits at each breakpoint. */}
+        {/* Scrims sized to where the copy actually sits at each breakpoint.
+            Kept deliberately light: the house is the subject, so the darkening
+            only has to carry the text's own column, not half the frame. */}
         <div
           className="absolute inset-0 md:hidden"
           style={{
-            background: `linear-gradient(to top, ${FRAME_BG} 4%, ${FRAME_BG}D9 26%, transparent 62%)`,
+            background: `linear-gradient(to top, ${FRAME_BG}F2 4%, ${FRAME_BG}BF 24%, transparent 56%)`,
           }}
         />
         <div
           className="absolute inset-0 hidden md:block"
           style={{
-            background: `linear-gradient(to right, ${FRAME_BG}F2 0%, ${FRAME_BG}A6 38%, transparent 70%)`,
+            background: `linear-gradient(to right, ${FRAME_BG}D9 0%, ${FRAME_BG}66 32%, transparent 56%)`,
           }}
         />
 

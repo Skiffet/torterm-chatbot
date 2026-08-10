@@ -31,7 +31,7 @@ export default function CategoryGrid({ onSelectGroup }) {
           <span className="text-primary font-semibold text-sm uppercase tracking-[0.18em]">
             {t('categoryGrid.eyebrow')}
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-ink-900 mt-3 leading-tight">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-ink-900 mt-3 leading-tight text-balance">
             {t('categoryGrid.title')}
           </h2>
           <p className="text-steel-500 mt-4 text-base md:text-lg leading-relaxed">

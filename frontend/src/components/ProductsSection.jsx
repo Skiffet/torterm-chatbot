@@ -58,7 +58,7 @@ export default function ProductsSection({ activeGroup, onChangeGroup }) {
           <span className="text-primary font-semibold text-sm uppercase tracking-[0.18em]">
             {t('products.eyebrow')}
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-ink-900 mt-3 leading-tight">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-ink-900 mt-3 leading-tight text-balance">
             {t('products.title')}
           </h2>
           <p className="text-steel-500 mt-4 text-base md:text-lg leading-relaxed">
