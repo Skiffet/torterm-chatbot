@@ -77,12 +77,6 @@ export const translations = {
       topBrands: 'แบรนด์ชั้นนำ',
       aiAnalyze: 'วิเคราะห์ & แนะนำอัตโนมัติ',
     },
-    cta: {
-      imageAlt: 'พื้นที่นั่งเล่นกลางแจ้งหลังปรับปรุง',
-      title: 'พร้อมเปลี่ยนบ้านของคุณหรือยัง?',
-      description: 'เริ่มคุยกับ Torterm AI วันนี้ ไม่มีค่าใช้จ่ายในการเริ่มต้น',
-      button: 'เริ่มคุยกับ Torterm AI',
-    },
     askAi: {
       ariaLabel: 'ถามข้อมูลสินค้ากับ Torterm AI (เร็วๆ นี้)',
       alt: 'ถามข้อมูลสินค้า',
@@ -169,12 +163,6 @@ export const translations = {
       subCategories: 'subcategories',
       topBrands: 'top brands',
       aiAnalyze: 'automated analysis & recommendations',
-    },
-    cta: {
-      imageAlt: 'Renovated outdoor living space',
-      title: 'Ready to transform your home?',
-      description: 'Start chatting with Torterm AI today — free to get started.',
-      button: 'Chat with Torterm AI',
     },
     askAi: {
       ariaLabel: 'Ask Torterm AI about products (coming soon)',

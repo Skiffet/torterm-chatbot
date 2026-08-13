@@ -36,7 +36,7 @@ export default function App() {
       <StatsBar />
       <HowItWorks />
       <CTASection />
-      <Footer />
+      <Footer onSelectGroup={setActiveGroup} />
       <AskAiButton />
       <EntryExperience />
     </div>

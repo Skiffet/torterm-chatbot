@@ -1,19 +1,99 @@
-export default function Footer() {
+const SHOP_LINKS = [
+  { label: 'Doors & Windows', groupId: 'door-window' },
+  { label: 'Floor & Wall', groupId: 'floor-wall' },
+  { label: 'Roofing & Structure', groupId: 'roof-structure' },
+  { label: 'Garden & Outdoor', groupId: 'garden-outdoor' },
+  { label: 'Paint & Supplies', groupId: 'paint' },
+]
+
+// Until the policy pages exist, these point at the closest section that already
+// answers the question. Swap the hrefs for real routes when those pages land.
+const HELP_LINKS = [
+  { label: 'How to Order', href: '#how-it-works' },
+  { label: 'Delivery', href: '#how-it-works' },
+  { label: 'Returns', href: '#how-it-works' },
+  { label: 'Contact Us', href: '#footer-contact' },
+]
+
+function ColumnHeading({ children }) {
   return (
-    <footer className="bg-ink-900 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2.5">
-          <span className="w-8 h-8 rounded-xl bg-safety flex items-center justify-center">
-            <svg className="w-[18px] h-[18px] text-ink" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7H3a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 10 4a2 2 0 0 1 2-2M7 14v2h2v-2H7m8 0v2h2v-2h-2M4 20c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2v-2H4v2z" />
-            </svg>
-          </span>
-          <span className="font-extrabold text-white text-lg">Torterm</span>
+    <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/35">
+      {children}
+    </h3>
+  )
+}
+
+export default function Footer({ onSelectGroup }) {
+  // Footer shop links double as catalogue filters: set the active group, then
+  // send the page back up to the product grid.
+  const openGroup = (groupId) => {
+    onSelectGroup?.(groupId)
+    document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return (
+    <footer className="bg-ink border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          <div className="max-w-xs">
+            <span className="font-bold text-white text-xl tracking-tight">Torterm</span>
+            <p className="mt-5 text-sm text-white/50 leading-relaxed">
+              An assistant for choosing exterior renovation materials, from a real product
+              catalogue with live prices.
+            </p>
+          </div>
+
+          <div>
+            <ColumnHeading>Shop</ColumnHeading>
+            <ul className="mt-6 space-y-4">
+              {SHOP_LINKS.map((link) => (
+                <li key={link.groupId + link.label}>
+                  <button
+                    onClick={() => openGroup(link.groupId)}
+                    className="text-sm text-white/70 hover:text-white transition-colors text-left"
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <ColumnHeading>Help</ColumnHeading>
+            <ul className="mt-6 space-y-4">
+              {HELP_LINKS.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-white/70 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div id="footer-contact">
+            <ColumnHeading>Contact</ColumnHeading>
+            <div className="mt-6 space-y-2">
+              <a
+                href="tel:020000000"
+                className="block font-mono text-base text-white tracking-wide hover:text-safety transition-colors"
+              >
+                02-000-0000
+              </a>
+              <p className="text-sm text-white/50">Mon–Sat, 9:00–18:00</p>
+            </div>
+          </div>
         </div>
 
-        <p className="text-sm text-white/40 text-center md:text-right">
-          © {new Date().getFullYear()} Torterm — ศูนย์รวมวัสดุก่อสร้างและผู้ช่วย AI
-        </p>
+        <div className="mt-16 pt-8 border-t border-white/10">
+          <p className="text-xs text-white/35">
+            © {new Date().getFullYear()} Torterm — Construction materials and AI assistant
+          </p>
+        </div>
       </div>
     </footer>
   )
